@@ -1,3 +1,9 @@
+#backend
+./backend/.idea
+./backend/.mvn
+
+
+
 # Logs
 logs
 *.log
