@@ -25,7 +25,7 @@ public class EmployeeController {
     // get employee by id
     @GetMapping("/employees/{id}")
     public Employee getEmployeeById(@PathVariable long id) {
-        return employeeRepository.findById(id).orElse(null); // Handle the case where the employee is not found
+        return employeeRepository.findById(id).orElse(null);
     }
 
     // create employee
@@ -41,6 +41,7 @@ public class EmployeeController {
         employeeToUpdate.setFirstName(employee.getFirstName());
         employeeToUpdate.setLastName(employee.getLastName());
         employeeToUpdate.setEmailId(employee.getEmailId());
+        employeeToUpdate.setPhoneNumber(employee.getPhoneNumber());
         return employeeRepository.save(employeeToUpdate);
     }
 
