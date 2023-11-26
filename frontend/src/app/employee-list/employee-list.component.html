@@ -8,6 +8,7 @@
       <th scope="col">Last Name</th>
       <th scope="col">Email Id</th>
       <th scope="col">Phone Number</th>
+      <th scope="col">Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -17,6 +18,10 @@
         <td>{{employee.lastName}}</td>
         <td>{{employee.emailId}}</td>
         <td>{{employee.phoneNumber}}</td>
+        <td>
+          <button (click)="updateEmployee(employee.id)" class="btn btn-info">Update</button>
+          <button (click)="deleteEmployee(employee.id)" class="btn btn-danger">Delete</button>
+        </td>
       </tr>
     </tbody>
   </table>
