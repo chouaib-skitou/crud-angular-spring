@@ -1,12 +1,15 @@
 package com.javacrud.backend.controller;
 
+import com.javacrud.backend.exception.RessourceNotFoundException;
 import com.javacrud.backend.repository.EmployeeRepository;
 import com.javacrud.backend.model.Employee;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -24,8 +27,9 @@ public class EmployeeController {
 
     // get employee by id
     @GetMapping("/employees/{id}")
-    public Employee getEmployeeById(@PathVariable long id) {
-        return employeeRepository.findById(id).orElse(null);
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable long id) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new RessourceNotFoundException("Employee not found with id: " + id));
+        return ResponseEntity.ok(employee);
     }
 
     // create employee
@@ -47,10 +51,14 @@ public class EmployeeController {
 
     // delete employee
     @DeleteMapping("/employees/{id}")
-    public String deleteEmployee(@PathVariable long id) {
-        employeeRepository.deleteById(id);
-        return "Employee deleted with id: " + id;
+    public ResponseEntity<?> deleteEmployee(@PathVariable long id) {
+        Employee employeeToDelete = employeeRepository.findById(id)
+                .orElseThrow(() -> new RessourceNotFoundException("Employee not found with id: " + id));
+        employeeRepository.delete(employeeToDelete);
+        Map<String, Boolean> response = Map.of("deleted", Boolean.TRUE);
+        return ResponseEntity.ok(response);
     }
+
 
 
 }
